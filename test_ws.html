@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>WebSocket Test</h2>
+<button onclick="connect()">Connect</button>
+<button onclick="sendMsg()">Send Ping</button>
+<pre id="log"></pre>
+
+<script>
+let socket;
+
+function connect() {
+    socket = new WebSocket("ws://localhost:8000/ws/2b9e4d65-7786-4c9c-968a-8452437ffccf");
+
+    socket.onopen = () => log("Connected");
+    socket.onmessage = (event) => log("Received: " + event.data);
+    socket.onerror = (err) => log("Error");
+    socket.onclose = () => log("Closed");
+}
+
+function sendMsg() {
+    socket.send("ping");
+}
+
+function log(msg) {
+    document.getElementById("log").textContent += msg + "\n";
+}
+</script>
+</body>
+</html>
