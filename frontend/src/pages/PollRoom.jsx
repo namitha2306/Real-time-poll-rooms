@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Toast from "../components/Toast";
 
-const API = "http://localhost:8000";
+const API = import.meta.env.VITE_API_URL;
 
 export default function PollRoom() {
   const { id } = useParams();
@@ -45,7 +45,10 @@ export default function PollRoom() {
   // WebSocket
   // =========================
   useEffect(() => {
-    const ws = new WebSocket(`ws://localhost:8000/ws/${id}`);
+    const wsProtocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const ws = new WebSocket(
+      `${wsProtocol}://${import.meta.env.VITE_API_URL.replace(/^https?:\/\//, "")}/ws/${id}`
+    );
 
     ws.onopen = () => {
       console.log("WebSocket connected ✅");
