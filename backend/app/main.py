@@ -11,6 +11,7 @@ from .routes import poll, vote
 from .websocket import manager
 from .core.limiter import limiter
 
+import os 
 
 app = FastAPI()
 FRONTEND_URL = os.getenv("FRONTEND_URL", "https://real-time-poll-rooms-woad.vercel.app/")
